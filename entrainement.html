@@ -31,9 +31,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
             margin: 2rem 0;
             font-size: 1.5rem;
+            white-space: nowrap;
+            flex-wrap: nowrap;
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 1rem;
         }
 
         input {
@@ -149,6 +154,28 @@
             white-space: nowrap;
             display: flex;
             align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .input-group {
+                font-size: 1.2rem;
+                gap: 0.3rem;
+            }
+
+            input {
+                width: 50px;
+                padding: 0.3rem;
+                font-size: 1rem;
+            }
+
+            .problem {
+                font-size: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .MathJax {
+                font-size: 0.9em !important;
+            }
         }
     </style>
 </head>
