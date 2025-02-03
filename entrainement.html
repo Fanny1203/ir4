@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S'entraîner - Identités Remarquables</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin: 1rem 0;
+        }
+
+        .problem {
+            font-size: 2rem;
+            margin: 2rem 0;
+            color: #2c3e50;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            font-size: 1.5rem;
+        }
+
+        input {
+            width: 60px;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 1.2rem;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2980b9;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .levels {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .button {
+            min-width: 200px;
+        }
+
+        .level-1 { background-color: #3498db; }
+        .level-2 { background-color: #2ecc71; }
+        .level-3 { background-color: #e74c3c; }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .victory-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            z-index: 1000;
+        }
+
+        .victory-screen h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #f1c40f;
+        }
+
+        .history-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            max-height: 60vh;
+            overflow-y: auto;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .history-container h3 {
+            color: #f1c40f;
+            margin-bottom: 1rem;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .question-item .MathJax {
+            color: white !important;
+            font-size: 1.2em !important;
+        }
+
+        .question-points {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-link">← Retour</a>
+    
+    <div class="game-container">
+        <div class="score">Score: <span id="score">0</span></div>
+
+        <!-- Écran de sélection du niveau -->
+        <div id="level-selection">
+            <h2>Choisissez votre niveau de difficulté</h2>
+            <div class="levels">
+                <button class="button level-1" onclick="startLevel(1)">Niveau 1 (1 point)</button>
+                <button class="button level-2" onclick="startLevel(2)">Niveau 2 (2 points)</button>
+                <button class="button level-3" onclick="startLevel(3)">Niveau 3 (3 points)</button>
+            </div>
+        </div>
+
+        <!-- Écran de jeu -->
+        <div id="game-screen" class="hidden">
+            <div class="problem">
+                <span id="equation"></span>
+            </div>
+            <div class="input-group">
+                (x + <input type="number" id="input-a" step="1"> )(x + <input type="number" id="input-b" step="1"> )
+            </div>
+            <button class="button level-2" onclick="checkAnswer()">Vérifier</button>
+        </div>
+
+        <!-- Écran de victoire -->
+        <div id="victory-screen" class="hidden victory-screen">
+            <h2>Bravo !</h2>
+            <p>Score final: <span id="final-score">0</span></p>
+            <div class="history-container">
+                <h3>Questions résolues :</h3>
+                <div id="questions-history"></div>
+            </div>
+            <button class="button level-1" onclick="restart()">Recommencer ?</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <div class="footer">Fanny Boitard, collège Voltaire</div>
+</body>
+</html>
